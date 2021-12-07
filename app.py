@@ -1,3 +1,4 @@
+from logging.handlers import RotatingFileHandler
 from flask import Flask, render_template, request, redirect, session, url_for
 from flask_avatar import Avatar
 from functools import wraps
@@ -5,6 +6,7 @@ from exts import db
 from models import User, Question, Comment
 import os
 import hashlib
+import logging
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(24)
@@ -106,6 +108,7 @@ def detail(question_id):
 
 
 @app.route('/comment/<question_id>', methods=['POST'])
+@login_required
 def comment(question_id):
     content = request.form.get('comment_content')
     comment = Comment(content=content)
@@ -130,4 +133,9 @@ def my_context_processor():
 
 
 if __name__ == '__main__':
+    logging.basicConfig(level=logging.DEBUG)
+    log_handle = RotatingFileHandler("log.txt", maxBytes=1024 * 1024, backupCount=5)
+    formatter = logging.Formatter("format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s-%(funcName)s',")
+    log_handle.setFormatter(formatter)
+    logging.getLogger().addHandler(log_handle)
     app.run(post="0.0.0.0", port="8000")
