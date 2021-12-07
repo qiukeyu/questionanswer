@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}details{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/detail.css') }}">
+{% endblock %}
+
+{% block main %}
+    <h3>{{ question.title }}</h3>
+    <p class="question-info">
+        <span>Author: {{ question.author.username }}</span>
+        <span>Date: {{ question.create_time }}</span>
+    </p>
+    <hr>
+    <p class="question-content">
+        {{ question.content }}
+    </p>
+    <hr>
+    <h4>Response: ({{ question.comments | length }})</h4>
+    <form action="{{ url_for('comment', question_id=question.id) }}" method="post">
+        <div class="form-group">
+            <input name='comment_content' type="text" class="form-control" placeholder="Type in your comments">
+        </div>
+        <div class="form-group" style="text-align: right">
+            <button class="btn">submit</button>
+        </div>
+    </form>
+    <ul class="comment-list">
+        {% for comment in question.comments %}
+        <li>
+            <div class="user-info">
+                <img src="{{ url_for('avatar', text = comment.author.username)}}">
+                <span class="username">{{ comment.author.username }}</span>
+                <span class="create-time">{{ comment.create_time }}</span>
+            </div>
+            <p class="comment-content">{{ comment.content }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Log-in{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+{% endblock %}
+
+{% block main %}
+    <h3>Log In</h3>
+    <form action="" method="post">
+        <div class="form-container">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="telephone number" name="telephone">
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="password" name="password">
+            </div>
+            {% if wrong %}
+                Wrong account or password, please try again!
+            {% endif %}
+            <div class="form-group">
+                <button class="btn btn-block">Log In</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}
