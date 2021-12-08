@@ -11,17 +11,25 @@
     <form action="" method="post">
         <div class="form-container">
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="telephone number" name="telephone">
+                <input type="text" class="form-control" placeholder="telephone number"
+                       name="telephone" id="user-telephone"/>
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" placeholder="password" name="password">
+                <input type="password" class="form-control" placeholder="password"
+                       name="password" id="user-password">
             </div>
             {% if wrong %}
                 Wrong account or password, please try again!
             {% endif %}
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" value="remember-me" id="check"> remember me
+                </label>
+            </div>
             <div class="form-group">
                 <button class="btn btn-block">Log In</button>
             </div>
         </div>
     </form>
+    <script src="{{ url_for('static', filename='js/login.js') }}"></script>
 {% endblock %}

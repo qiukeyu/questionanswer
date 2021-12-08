@@ -11,7 +11,7 @@
         {% for question in questions %}
             <li>
                 <div class="avatar-group">
-                    <img src="{{ url_for('avatar', text = question.author.username, width = 30)}}">
+                    <img src="{{ url_for('avatar', text = question.author.username, width = 30)}}" alt="avatar">
                 </div>
                 <div class="question-group">
                     <p class="question-title"><a href="{{ url_for('detail', question_id=question.id) }}">{{ question.title }}</a></p>

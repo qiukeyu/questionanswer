@@ -31,7 +31,8 @@ def login():
     else:
         telephone = request.form.get('telephone')
         password = request.form.get('password')
-        user = User.query.filter_by(telephone=telephone, password=hashlib.md5(password.encode('utf-8')).hexdigest()).first()
+        user = User.query.filter_by(telephone=telephone,
+                                    password=hashlib.md5(password.encode('utf-8')).hexdigest()).first()
         if user:
             session['user_id'] = user.id
             return redirect(url_for('index'))
@@ -64,7 +65,7 @@ def register():
         # check telephone number
         user = User.query.filter_by(telephone=telephone).first()
         if telephone.isdigit() is False or len(telephone) != 11 or username is None or password is None\
-                or password2 != password:
+                or username == "" or password == "" or password2 != password:
             return redirect(url_for('register'))
         if user:
             context = {
@@ -72,10 +73,43 @@ def register():
             }
             return render_template('register.html', **context)
         else:
-            user = User(telephone=telephone, username=username, password=hashlib.md5(password.encode('utf-8')).hexdigest())
+            user = User(telephone=telephone, username=username,
+                        password=hashlib.md5(password.encode('utf-8')).hexdigest())
             db.session.add(user)
             db.session.commit()
             return redirect(url_for('login'))
+
+
+@app.route('/change_password', methods=['GET', 'POST'])
+def change_password():
+    if request.method == 'GET':
+        return render_template('passwordchange.html')
+    else:
+        password0 = request.form.get('password0')
+        password = request.form.get('password')
+        password2 = request.form.get('password2')
+        user = User.query.filter_by(id=session.get('user_id')).first()
+
+        if hashlib.md5(password0.encode('utf-8')).hexdigest() != user.password:
+            context = {
+                'password_wrong': 'Incorrect password!'
+            }
+        elif password is None or password == "":
+            context = {
+                'change_password_wrong': 'Password can not be null!'
+            }
+        elif password2 != password:
+            context = {
+                'change_password_wrong_differ': 'Entered passwords differ!'
+            }
+        else:
+            user.password = hashlib.md5(password.encode('utf-8')).hexdigest()
+            db.session.merge(user)
+            db.session.commit()
+            context = {
+                'change_password_successfully': 'change password successfully!'
+            }
+        return render_template('passwordchange.html', **context)
 
 
 @app.route('/logout')
