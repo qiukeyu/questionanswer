@@ -1,0 +1,5 @@
+2021-12-09 00:33:08,546 werkzeug:[INFO]127.0.0.1 - - [09/Dec/2021 00:33:08] "[37mGET / HTTP/1.1[0m" 200 - _log
+2021-12-09 00:33:08,647 werkzeug:[INFO]127.0.0.1 - - [09/Dec/2021 00:33:08] "[37mGET /static/css/base.css HTTP/1.1[0m" 200 - _log
+2021-12-09 00:33:08,693 werkzeug:[INFO]127.0.0.1 - - [09/Dec/2021 00:33:08] "[37mGET /avatar/Allen/30 HTTP/1.1[0m" 200 - _log
+2021-12-09 00:33:08,693 werkzeug:[INFO]127.0.0.1 - - [09/Dec/2021 00:33:08] "[37mGET /avatar/John/30 HTTP/1.1[0m" 200 - _log
+2021-12-09 00:33:08,693 werkzeug:[INFO]127.0.0.1 - - [09/Dec/2021 00:33:08] "[37mGET /avatar/Tom/30 HTTP/1.1[0m" 200 - _log

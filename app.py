@@ -15,6 +15,11 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 Avatar(app)
 
+logging.basicConfig(level=logging.DEBUG)
+log_handle = RotatingFileHandler("debug.log", maxBytes=1024 * 1024, backupCount=5)
+formatter = logging.Formatter("%(asctime)s %(name)s:[%(levelname)s]%(message)s %(funcName)s")
+log_handle.setFormatter(formatter)
+logging.getLogger().addHandler(log_handle)
 
 @app.route('/')
 def index():
@@ -167,9 +172,4 @@ def my_context_processor():
 
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.DEBUG)
-    log_handle = RotatingFileHandler("log.txt", maxBytes=1024 * 1024, backupCount=5)
-    formatter = logging.Formatter("format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s-%(funcName)s',")
-    log_handle.setFormatter(formatter)
-    logging.getLogger().addHandler(log_handle)
     app.run(post="0.0.0.0", port="8000")
